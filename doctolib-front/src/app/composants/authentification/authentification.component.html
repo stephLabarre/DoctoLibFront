@@ -1,0 +1,15 @@
+<h3 style="text-align:center">Authentification</h3>
+
+<div class="container text-center">
+    <div class="rowjustify-content-md-center">
+        <div> 
+            <form #myForm="ngForm">
+                <div class="form-group"> 
+                    Login : <input required minLength="2" maxLength="50" type="text" class="form-control" name="login" [(ngModel)]="authentificationForm.login"> 
+                    Mot de passe : <input required minLength="2" maxLength="50" type="text" class="form-control" name="mdp" [(ngModel)]="authentificationForm.mdp"> 
+                    <button (click)="login()" [disabled]="myForm.invalid" type="submit" class="btn btn-primary mt-2">Connexion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
