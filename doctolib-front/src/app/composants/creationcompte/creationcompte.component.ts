@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CreationCompteForm } from './CreationCompteForm';
 import { Utilisateur } from '../../entites/Utilisateur';
+import {  UtilisateurService } from '../../services/utilisateur.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-creationcompte',
@@ -9,10 +11,11 @@ import { Utilisateur } from '../../entites/Utilisateur';
 })
 export class CreationcompteComponent implements OnInit {
 
-  creationCompteForm =  new CreationCompteForm("","","","","","","","","","");  
+  creationCompteForm =  new CreationCompteForm("","","","","",null,"","","","");  
  
   user: Utilisateur;
-  constructor() { }
+  
+  constructor(private utilisateurService: UtilisateurService) { }
 
   ngOnInit(): void {
   }
@@ -21,9 +24,16 @@ export class CreationcompteComponent implements OnInit {
     this.user = new Utilisateur(this.creationCompteForm.nom,this.creationCompteForm.prenom,
         this.creationCompteForm.login, this.creationCompteForm.mdp,this.creationCompteForm.adresse,
         this.creationCompteForm.codePostal,this.creationCompteForm.ville,this.creationCompteForm.email,
-        this.creationCompteForm.tel,this.creationCompteForm.numSecuSociale);
-    //    let userLoged: Utilisateur = this.utilisateurService.login(user);
-    //    this.isLogged = userLoged != null ? true : false;
-        console.log("Utilisateur connecté : " + this.user.toJson(this.user));
+        this.creationCompteForm.tel,this.creationCompteForm.numSecSociale);
+        
+        this.utilisateurService.createUser(this.user).subscribe(utilisateur => {
+          console.log(utilisateur);
+        }, (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+                console.log('Client-side error occured.');
+            } else {
+                console.log('Server-side error occured.');
+            }
+        });
   }
 }

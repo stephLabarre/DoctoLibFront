@@ -19,9 +19,10 @@ export class AuthentificationComponent implements OnInit {
   }
 
   login() {
-    this.user = new Utilisateur("","",this.authentificationForm.login, this.authentificationForm.mdp,"","","","","","");
+    this.user = new Utilisateur("","",this.authentificationForm.login, this.authentificationForm.mdp,"",null,"","","","");
 //    let userLoged: Utilisateur = this.utilisateurService.login(user);
 //    this.isLogged = userLoged != null ? true : false;
+// http://localhost:8080/utilisateur
     console.log("Utilisateur connecté : " + this.user.toJson(this.user));
   }
 }

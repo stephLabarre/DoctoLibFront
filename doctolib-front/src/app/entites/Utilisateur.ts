@@ -4,15 +4,15 @@ export class Utilisateur {
     login: string;
     mdp: string;
     adresse: string;
-    codePostal: string;
+    codePostal: number;
     ville: string;
     email: string;
     tel: string;
-    numSecuSociale: string;
+    numSecSociale: string;
 
     constructor (nom: string, prenom: string, login: string, mdp: string, adresse: string, 
-        codePostal: string, ville: string, email: string, tel: string, 
-        numSecuSociale: string) {
+        codePostal: number, ville: string, email: string, tel: string, 
+        numSecSociale: string) {
         this.nom = nom;
         this.prenom = prenom;
         this.login = login;
@@ -22,7 +22,7 @@ export class Utilisateur {
         this.ville = ville;
         this.email = email;
         this.tel = tel;
-        this.numSecuSociale = numSecuSociale;
+        this.numSecSociale = numSecSociale;
     }
 
     toJson(utilisateur: Utilisateur) {

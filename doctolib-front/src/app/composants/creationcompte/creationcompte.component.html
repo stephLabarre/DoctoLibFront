@@ -10,11 +10,11 @@
                     Login : <input required minLength="2" maxLength="50" type="text" class="form-control" name="login" [(ngModel)]="creationCompteForm.login"> 
                     Mot de passe : <input required minLength="2" maxLength="50" type="text" class="form-control" name="mdp" [(ngModel)]="creationCompteForm.mdp"> 
                     Adresse : <input required minLength="2" maxLength="50" type="text" class="form-control" name="adresse" [(ngModel)]="creationCompteForm.adresse"> 
-                    Code postal : <input required minLength="2" maxLength="50" type="text" class="form-control" name="codePostal" [(ngModel)]="creationCompteForm.codePostal"> 
+                    Code postal : <input required type="number" class="form-control" name="codePostal" [(ngModel)]="creationCompteForm.codePostal"> 
                     Ville : <input required minLength="2" maxLength="50" type="text" class="form-control" name="ville" [(ngModel)]="creationCompteForm.ville"> 
                     Email : <input required minLength="2" maxLength="50" type="text" class="form-control" name="email" [(ngModel)]="creationCompteForm.email"> 
                     Téléphone : <input required minLength="2" maxLength="50" type="text" class="form-control" name="tel" [(ngModel)]="creationCompteForm.tel"> 
-                    Numéro de sécurité sociale : <input required minLength="2" maxLength="50" type="text" class="form-control" name="numSecuSociale" [(ngModel)]="creationCompteForm.numSecuSociale"> 
+                    Numéro de sécurité sociale : <input required minLength="2" maxLength="50" type="text" class="form-control" name="numSecSociale" [(ngModel)]="creationCompteForm.numSecSociale"> 
                     <button (click)="creerCompte()" [disabled]="myForm.invalid" type="submit" class="btn btn-primary mt-2">Créer compte</button>
                 </div>
             </form>
