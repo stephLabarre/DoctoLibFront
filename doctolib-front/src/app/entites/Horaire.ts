@@ -1,11 +1,11 @@
 export class Horaires {
     jour: string;
-    debutAMHour: number;
-    finAMHour: number;
-    debutPMHour: number;
-    finPMHour: number;
+    debutAMHour: Date;
+    finAMHour: Date;
+    debutPMHour: Date;
+    finPMHour: Date;
 
-    constructor (jour: string, debutAMHour: number, finAMHour: number, debutPMHour: number, finPMHour: number) {
+    constructor (jour: string, debutAMHour: Date, finAMHour: Date, debutPMHour: Date, finPMHour: Date) {
         this.jour = jour;
         this.debutAMHour = debutAMHour;
         this.finAMHour = finAMHour;

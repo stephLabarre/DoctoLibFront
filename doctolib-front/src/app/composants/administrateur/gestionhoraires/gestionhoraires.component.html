@@ -8,11 +8,11 @@
                     <tr>
                         <td *ngFor="let horaire of horaires">
                             <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="horaire.debutAMHour" [(ngModel)]="horaire.debutAMHour"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="horaire.finAMHour" [(ngModel)]="horaire.finAMHour"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="debutAMHour" [(ngModel)]="horaire.debutAMHour"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="finAMHour" [(ngModel)]="horaire.finAMHour"></igx-time-picker>
                             <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="horaire.debutPMHour" [(ngModel)]="horaire.debutPMHour"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}"  format="HH:mm" name="horaire.finPMHour" [(ngModel)]="horaire.finPMHour"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="debutPMHour" [(ngModel)]="horaire.debutPMHour"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}"  format="HH:mm" name="finPMHour" [(ngModel)]="horaire.finPMHour"></igx-time-picker>
                         </td>
                     </tr>
                 </table>
