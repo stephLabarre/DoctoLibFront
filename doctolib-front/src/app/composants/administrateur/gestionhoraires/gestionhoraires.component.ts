@@ -8,27 +8,34 @@ import { Horaires } from '../../../entites/Horaire';
 })
 export class GestionhorairesComponent implements OnInit {
 
-  public horaires: Horaires[] = [];
+  public horairesList: Horaires[] = [];
+
+  nowDebut: Date = new Date();
+  nowFin: Date = new Date();
+  vendredi: Date = new Date();
+  samedi: Date = new Date();
 
   constructor() { }
 
   ngOnInit(): void {
-    let nowDebut: Date = new Date();
-    let nowFin: Date = new Date();
-    nowDebut.setHours(10);
-    nowDebut.setMinutes(45);
-    nowFin.setHours(13);
-    nowFin.setMinutes(30);
-    //    nowDebut.setHours(4);
-//    nowFin.setMinutes(15);
-    console.log("HEURE DEBUT=" + nowDebut + " HEURE FIN=" + nowFin);
-    this.horaires.push(new Horaires("Lundi", nowDebut, nowFin, nowDebut, nowFin));
-    this.horaires.push(new Horaires("Mardi", nowDebut, nowFin, nowDebut, nowFin));
-    this.horaires.push(new Horaires("Mercredi", nowDebut, nowFin, nowDebut, nowFin));
-    this.horaires.push(new Horaires("Jeudi", nowDebut, nowFin, nowDebut, nowFin));
-    this.horaires.push(new Horaires("Vendredi", nowDebut, nowFin, null, null));
-    this.horaires.push(new Horaires("Samedi", nowDebut, nowFin, nowDebut, nowFin));
-    this.horaires.forEach(e => {
+    this.nowDebut.setHours(9);
+    this.nowDebut.setMinutes(0);
+    this.nowFin.setHours(12);
+    this.nowFin.setMinutes(30);
+    this.vendredi.setHours(18);
+    this.vendredi.setMinutes(45);
+    this.samedi.setHours(12);
+    this.samedi.setMinutes(45);
+
+    console.log("HEURE DEBUT=" + this.nowDebut + " HEURE FIN=" + this.nowFin);
+    console.log("HEURE VENDREDI=" + this.vendredi + " HEURE VENDREDI=" + this.vendredi);
+    this.horairesList.push(new Horaires("Lundi", this.nowDebut, this.nowDebut, this.nowFin, this.nowFin));
+    this.horairesList.push(new Horaires("Mardi", this.nowDebut, this.nowFin, this.nowDebut, this.nowFin));
+    this.horairesList.push(new Horaires("Mercredi", this.nowDebut, this.nowFin, this.nowDebut, this.nowFin));
+    this.horairesList.push(new Horaires("Jeudi", this.nowDebut, this.nowFin, this.nowDebut, this.nowFin));
+    this.horairesList.push(new Horaires("Vendredi", this.vendredi, this.vendredi, this.vendredi, this.vendredi));
+    this.horairesList.push(new Horaires("Samedi",this.vendredi, this.vendredi, this.samedi, this.samedi));
+    this.horairesList.forEach(e => {
       console.log("======");
       console.log("Jour : " + e.jour);
       console.log("Debut AM : " + e.debutAMHour.getHours() + ":" + e.debutAMHour.getMinutes());
@@ -43,7 +50,7 @@ export class GestionhorairesComponent implements OnInit {
   }
 
   saveHoraires() {
-    this.horaires.forEach(e => {
+    this.horairesList.forEach(e => {
       console.log("-----");
       console.log(e.debutAMHour);
       console.log(e.finAMHour);

@@ -6,14 +6,16 @@
                 <table>
                     <th><h5>Lundi</h5></th><th><h5>Mardi</h5></th><th><h5>Mercredi</h5></th><th><h5>Jeudi</h5></th><th><h5>Vendredi</h5></th><th><h5>Samedi</h5></th>
                     <tr>
-                        <td *ngFor="let horaire of horaires">
-                            <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="debutAMHour" [(ngModel)]="horaire.debutAMHour"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="finAMHour" [(ngModel)]="horaire.finAMHour"></igx-time-picker>
-                            <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="debutPMHour" [(ngModel)]="horaire.debutPMHour"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}"  format="HH:mm" name="finPMHour" [(ngModel)]="horaire.finPMHour"></igx-time-picker>
-                        </td>
+                        <ng-container *ngFor="let horaires of horairesList; let i = index; let j = index; let k = index; let l = index">
+                            <td>
+                                <p>Matin</p>
+                                <igx-time-picker [isSpinLoop]="true" [itemsDelta]="{minutes:15}" format="HH:mm" name="row{{1 + i}}" [(ngModel)]="horaires.debutAMHour"></igx-time-picker>
+                                <igx-time-picker [isSpinLoop]="true" [itemsDelta]="{minutes:15}" format="HH:mm" name="row{{7 + j}}" [(ngModel)]="horaires.finAMHour"></igx-time-picker>
+                                <p>Après-midi</p>
+                                <igx-time-picker [isSpinLoop]="true" [itemsDelta]="{minutes:15}" format="HH:mm" name="row{{14 + k}}" [(ngModel)]="horaires.debutPMHour"></igx-time-picker>
+                                <igx-time-picker [isSpinLoop]="true"  [itemsDelta]="{minutes:15}"  format="HH:mm" name="row{{21 + l}}" [(ngModel)]="horaires.finPMHour"></igx-time-picker>
+                            </td>
+                        </ng-container>
                     </tr>
                 </table>
                 <br/><br/>
