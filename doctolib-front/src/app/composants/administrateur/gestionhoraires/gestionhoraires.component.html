@@ -4,60 +4,15 @@
         <div>             
             <form #myForm="ngForm">
                 <table>
-                    <th><h5>Lundi</h5></th><th></th><th><h5>Mardi</h5></th><th></th><th><h5>Mercredi</h5></th><th></th><th><h5>Jeudi</h5></th><th></th><th><h5>Vendredi</h5></th><th></th><th><h5>Samedi</h5></th>
+                    <th><h5>Lundi</h5></th><th><h5>Mardi</h5></th><th><h5>Mercredi</h5></th><th><h5>Jeudi</h5></th><th><h5>Vendredi</h5></th><th><h5>Samedi</h5></th>
                     <tr>
-                        <td>
+                        <td *ngFor="let horaire of horaires">
                             <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="lundidebutTimeAM" [(ngModel)]="lundidebutTimeAM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="lundifinTimeAM" [(ngModel)]="lundifinTimeAM"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="horaire.debutAMHour" [(ngModel)]="horaire.debutAMHour"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="horaire.finAMHour" [(ngModel)]="horaire.finAMHour"></igx-time-picker>
                             <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="lundidebutTimePM" [(ngModel)]="lundidebutTimePM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}"  format="HH:mm" name="lundifinTimePM" [(ngModel)]="lundifinTimePM"></igx-time-picker>
-                        </td>
-                        <td style="width:10px;"></td>
-                        <td>
-                            <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mardidebutTimeAM" [(ngModel)]="mardidebutTimeAM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mardifinTimeAM" [(ngModel)]="mardifinTimeAM"></igx-time-picker>
-                            <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mardidebutTimePM" [(ngModel)]="mardidebutTimePM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mardifinTimePM" [(ngModel)]="mardifinTimePM"></igx-time-picker>
-                        </td>
-                        <td style="width:10px;"></td>
-                        <td>
-                            <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mercredidebutTimeAM" [(ngModel)]="mercredidebutTimeAM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mercredifinTimeAM" [(ngModel)]="mercredifinTimeAM"></igx-time-picker>
-                            <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mercredidebutTimePM" [(ngModel)]="mercredidebutTimePM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="mercredifinTimePM" [(ngModel)]="mercredifinTimePM"></igx-time-picker>
-                        </td>
-                        <td style="width:10px;"></td>
-                        <td>
-                            <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="jeudidebutTimeAM" [(ngModel)]="jeudidebutTimeAM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="jeudifinTimeAM" [(ngModel)]="jeudifinTimeAM"></igx-time-picker>
-                            <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="jeudidebutTimePM" [(ngModel)]="jeudidebutTimePM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="jeudifinTimePM" [(ngModel)]="jeudifinTimePM"></igx-time-picker>
-                        </td>
-                        <td style="width:10px;"></td>
-                        <td>
-                            <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="vendredidebutTimeAM" [(ngModel)]="vendredidebutTimeAM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="vendredifinTimeAM" [(ngModel)]="vendredifinTimeAM"></igx-time-picker>
-                            <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="vendredidebutTimePM" [(ngModel)]="vendredidebutTimePM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="vendredifinTimePM" [(ngModel)]="vendredifinTimePM"></igx-time-picker>
-                        </td>
-                        <td style="width:10px;"></td>
-                        <td>
-                            <p>Matin</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="samedidebutTimeAM" [(ngModel)]="samedidebutTimeAM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="samedifinTimeAM" [(ngModel)]="samedifinTimeAM"></igx-time-picker>
-                            <p>Après-midi</p>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="samedidebutTimePM" [(ngModel)]="samedidebutTimePM"></igx-time-picker>
-                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="samedifinTimePM" [(ngModel)]="samedifinTimePM"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}" format="HH:mm" name="horaire.debutPMHour" [(ngModel)]="horaire.debutPMHour"></igx-time-picker>
+                            <igx-time-picker [itemsDelta]="{minutes:15}"  format="HH:mm" name="horaire.finPMHour" [(ngModel)]="horaire.finPMHour"></igx-time-picker>
                         </td>
                     </tr>
                 </table>
