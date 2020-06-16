@@ -22,9 +22,11 @@ export class GestionhorairesComponent implements OnInit {
   constructor(private horaireService: HoraireService) { }
 
   ngOnInit(): void {
+    console.log("Etape 1");
     let horaires: Horaires[] = [];
     this.horaireService.getHoraires().subscribe(horaire => {
       horaires = horaire;   
+      console.log("Etape 2");
       for (let entry of this.jours) {
         console.log("Jour de la semaine : " + entry);
         let h: Horaires = horaires.find(e => e.jour === entry);
@@ -34,6 +36,7 @@ export class GestionhorairesComponent implements OnInit {
           this.horairesList.push(new Horaires(entry, null, null, null, null));
         }
       }     
+      console.log("Etape 3");
       console.log("Data from BDD = " + JSON.stringify(horaires));
       console.log("Data Target Retreive = " + JSON.stringify(this.horairesList));
     }, (err: HttpErrorResponse) => {
@@ -43,6 +46,7 @@ export class GestionhorairesComponent implements OnInit {
             console.log('Server-side error occured.');
         }
     });  
+    console.log("Etape 4");
   }
 
   saveHoraires() {
