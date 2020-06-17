@@ -6,14 +6,13 @@
                 <table>
                     <th><h5>Lundi</h5></th><th><h5>Mardi</h5></th><th><h5>Mercredi</h5></th><th><h5>Jeudi</h5></th><th><h5>Vendredi</h5></th><th><h5>Samedi</h5></th>
                     <tr>
-                        <ng-container *ngFor="let horaires of horairesList; let i = index;">
+                        <ng-container *ngFor="let h of horairesList; let i = index;">
                             <td>
                                 <p>Matin</p>
-                                <igx-time-picker [isSpinLoop]="true" [itemsDelta]="{minutes:15}" format="HH:mm" name="row{{1 + i}}" [(ngModel)]="horaires.debutAMHour"></igx-time-picker>
-                                <igx-time-picker [isSpinLoop]="true" [itemsDelta]="{minutes:15}" format="HH:mm" name="row{{7 + i}}" [(ngModel)]="horaires.finAMHour"></igx-time-picker>
-                                <p>Après-midi</p>
-                                <igx-time-picker [isSpinLoop]="true" [itemsDelta]="{minutes:15}" format="HH:mm" name="row{{14 + i}}" [(ngModel)]="horaires.debutPMHour"></igx-time-picker>
-                                <igx-time-picker [isSpinLoop]="true"  [itemsDelta]="{minutes:15}"  format="HH:mm" name="row{{21 + i}}" [(ngModel)]="horaires.finPMHour"></igx-time-picker>
+                                <igx-time-picker  format="hh:mm tt" name="row{{1 + i}}" [(ngModel)]="h.debutAMHour"></igx-time-picker>
+                                <igx-time-picker  format="hh:mm tt" name="row{{7 + i}}" [(ngModel)]="h.finAMHour"></igx-time-picker>                                <p>Après-midi</p>
+                                <igx-time-picker  format="hh:mm tt" name="row{{14 + i}}" [(ngModel)]="h.debutPMHour"></igx-time-picker>
+                                <igx-time-picker  format="hh:mm tt" name="row{{21 + i}}" [(ngModel)]="h.finPMHour"></igx-time-picker>
                             </td>
                         </ng-container>
                     </tr>
