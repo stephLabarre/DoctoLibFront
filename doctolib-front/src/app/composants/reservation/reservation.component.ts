@@ -28,7 +28,12 @@ const colors: any = {
 export class ReservationComponent {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
-  view: CalendarView = CalendarView.Month;
+  public minAM: string = "08:25";
+  public maxAM: string = "12:00";
+  public minPM: string = "13:00";
+  public maxPM: string = "18:00";
+
+  view: CalendarView = CalendarView.Week;
 
   CalendarView = CalendarView;
 
@@ -60,44 +65,7 @@ export class ReservationComponent {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
+    
   ];
 
   activeDayIsOpen: boolean = true;
@@ -160,6 +128,10 @@ export class ReservationComponent {
 
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
+  }
+
+  addReservation(eventToAdd: CalendarEvent) {
+    this.events = this.events.filter((event) => event !== eventToAdd);
   }
 
   setView(view: CalendarView) {
