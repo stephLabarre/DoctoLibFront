@@ -15,23 +15,9 @@ export class GestionhorairesComponent implements OnInit {
 
   public jours: string[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
 
-  /*
-  nowDebut: Date = new Date();
-  nowFin: Date = new Date();
-  vendredi: Date = new Date();
-  samedi: Date = new Date();
-  */
   constructor(private horaireService: HoraireService) { }
 
   ngOnInit() {
-/*  
-    this.horairesList.push(new Horaires("Lundi",null, null, null, null));
-    this.horairesList.push(new Horaires("Mardi", new Date(), new Date(), new Date(), new Date()));
-    this.horairesList.push(new Horaires("Mercredi", new Date(), new Date(), new Date(), new Date()));
-    this.horairesList.push(new Horaires("Jeudi", new Date(), new Date(), new Date(), new Date()));
-    this.horairesList.push(new Horaires("Vendredi", new Date(), new Date(), new Date(), new Date()));
-    this.horairesList.push(new Horaires("Samedi", new Date(), new Date(), new Date(), new Date()));
-*/
     this.retreiveHoraires();
     console.log("Taille de la liste des horaires : " + this.horairesList.length);
   }

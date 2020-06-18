@@ -20,6 +20,10 @@ export class UtilisateurService {
 
   constructor(private httpClient: HttpClient) { }
 
+  loggedUser(utilisateur: Utilisateur): Observable<Utilisateur> {
+    return this.httpClient.get<Utilisateur>(this.baseUrl + "authentification?login=" + utilisateur.login + "&mdp=" + utilisateur.mdp);
+  }
+
   createUser(utilisateur: Utilisateur): Observable<Utilisateur> {
     this.user = utilisateur;
     return this.httpClient.post<Utilisateur>(this.baseUrl + "utilisateur", this.user, this.httpOptions);

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthentificationForm } from './AuthentificationForm';
 import { Utilisateur } from '../../entites/Utilisateur';
+import { UtilisateurService } from '../../services/utilisateur.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-authentification',
@@ -13,16 +15,22 @@ export class AuthentificationComponent implements OnInit {
     
   user: Utilisateur;
 
-  constructor() { }
+  constructor(private utilisateurService: UtilisateurService) { }
 
   ngOnInit(): void {
   }
 
   login() {
-    this.user = new Utilisateur(0, "","",this.authentificationForm.login, this.authentificationForm.mdp,"",null,"","","","","");
-//    let userLoged: Utilisateur = this.utilisateurService.login(user);
-//    this.isLogged = userLoged != null ? true : false;
-// http://localhost:8080/utilisateur
-    console.log("Utilisateur connecté : " + this.user.toJson(this.user));
+    let utilisateur = new Utilisateur(0, "","", this.authentificationForm.login, this.authentificationForm.mdp,"", 0,"","","","", "");
+    this.utilisateurService.loggedUser(utilisateur).subscribe(user => {
+      this.user = user; 
+      console.log("Utilisateur connecté=" + this.user.nom + " prenom=" + this.user.prenom + " login=" + this.user.login + " role=" + this.user.role);  
+    }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+            console.log('Client-side error occured.');
+        } else {
+            console.log('Server-side error occured.');
+        }
+    });  
   }
 }
