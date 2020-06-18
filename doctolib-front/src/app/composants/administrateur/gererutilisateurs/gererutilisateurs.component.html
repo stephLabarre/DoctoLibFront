@@ -1,0 +1,75 @@
+<div *ngIf="user !== null">
+    <h4 style="text-align: center; color:red;">Mise à jour de l'utilisateur</h4><br/><br/>
+    <div>             
+        <form #myForm="ngForm">
+            <table style="margin: 0 auto;">
+                <tr>
+                    <td>Nom : </td>
+                    <td><input minLength="2" maxLength="50" type="text" class="form-control update" name="user-nom" [(ngModel)]="user.nom"></td>
+                </tr>
+                <tr>
+                    <td>Prénom : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-prenom" [(ngModel)]="user.prenom">               
+                </tr>
+                <tr>
+                    <td>Login : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-login" [(ngModel)]="user.login">               
+                </tr>
+                <tr>
+                    <td>Mot de passe : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-mdp" [(ngModel)]="user.mdp">               
+                </tr>
+                <tr>
+                    <td>Adresse : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-adresse" [(ngModel)]="user.adresse">          
+                </tr>
+                <tr>
+                    <td>Code Postal : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-codePostal" [(ngModel)]="user.codePostal">                
+                </tr>
+                <tr>
+                    <td>Ville : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-ville" [(ngModel)]="user.ville">            
+                </tr>
+                <tr>
+                    <td>Email : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-email" [(ngModel)]="user.email">                
+                </tr>
+                <tr>
+                    <td>Téléphone : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-tel" [(ngModel)]="user.tel">            
+                </tr>
+                <tr>
+                    <td>Numéro Sécurité sociale : </td>
+                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-numSecSociale" [(ngModel)]="user.numSecSociale">            
+                </tr>
+            </table>
+            <br/>
+            <button style="margin:0 auto; display:block;" (click)="save(user)" type="submit" class="btn btn-primary mt-2">Sauvegarder</button>
+        </form>
+    </div>
+</div>
+<h3 style="text-align: center; color:green">Gérer les utilisateurs</h3><br/><br/>
+<div class="container text-center">
+    <div class="row justify-content-md-center">
+        <div>             
+            <form #myForm="ngForm">
+                <table>
+                    <tr><th><h5>Nom</h5></th><th><h5>Prénom</h5></th><th><h5>Login</h5></th><th style="width: 300px;"><h5>Email</h5></th><th class="delete" style="width: 10px;"></th><th class="delete"><th class="delete" style="width: 10px;"></th><th class="delete"></th></tr>
+                    <ng-container *ngFor="let u of usersList;">
+                        <tr>
+                            <td><input minLength="2" maxLength="50" type="text" class="form-control" name="nom-{{u.id}}" [(ngModel)]="u.nom"> </td>
+                            <td><input minLength="2" maxLength="50" type="text" class="form-control" name="prenom-{{u.id}}" [(ngModel)]="u.prenom"> </td>
+                            <td><input minLength="2" maxLength="50" type="text" class="form-control" name="login-{{u.id}}" [(ngModel)]="u.login"> </td>
+                            <td><input minLength="2" maxLength="50" type="text" class="form-control" name="email-{{u.id}}" [(ngModel)]="u.email"> </td>
+                            <td></td>
+                            <td><button (click)="updateUser(u)" type="submit" class="btn btn-primary mt-2">Mise à Jour</button></td>
+                            <td></td>
+                            <td><button (click)="deleteUser(u)" type="submit" class="btn btn-primary mt-2">Supprimer</button></td>
+                        </tr>
+                    </ng-container>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

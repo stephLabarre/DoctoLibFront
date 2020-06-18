@@ -1,0 +1,20 @@
+.delete {
+    border-bottom: none;
+}
+th {
+    border-bottom: 1px solid green;
+}
+tr {
+    text-align: left;
+}
+h5 {
+    width: 200px;
+}
+input {
+    border: 0px solid rgb(150, 137, 137);    
+}
+
+.update {
+    border: 1px solid grey;    
+    width: 400px;
+}

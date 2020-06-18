@@ -1,4 +1,5 @@
 export class Utilisateur {
+    id: Number;
     nom: string;
     prenom: string;
     login: string;
@@ -10,9 +11,10 @@ export class Utilisateur {
     tel: string;
     numSecSociale: string;
 
-    constructor (nom: string, prenom: string, login: string, mdp: string, adresse: string, 
+    constructor (id: Number, nom: string, prenom: string, login: string, mdp: string, adresse: string, 
         codePostal: number, ville: string, email: string, tel: string, 
         numSecSociale: string) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.login = login;

@@ -12,13 +12,15 @@ import { GestionhorairesComponent } from './composants/administrateur/gestionhor
 import { HammerModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IgxTimePickerModule } from 'igniteui-angular';
+import { GererutilisateursComponent } from './composants/administrateur/gererutilisateurs/gererutilisateurs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthentificationComponent,
     CreationcompteComponent,
-    GestionhorairesComponent
+    GestionhorairesComponent,
+    GererutilisateursComponent
   ],
   imports: [
     BrowserModule,
