@@ -59,16 +59,19 @@
   <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
   
   <br /><br /><br />
-  
-  <button class="btn btn-primary float-left" (click)="addEvent()">
+  <!--
+      <button class="btn btn-primary float-left" (click)="addEvent()">
     Ajout RDV
   </button>
   <div class="clearfix"></div>
-  
+-->
+  <div>Horaires d'ouverture</div>
+  <div> {{ openHoraires }}</div>
   <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>Title</th>
           <th>Heure</th>
           <th>Supprimer</th>
           <th>Réserver</th>
@@ -76,9 +79,13 @@
       </thead>
   
       <tbody>
-        <tr *ngFor="let event of events">
+<!--        <tr *ngFor="let event of events"> -->
+        <tr>
           <td>
-            <igx-time-picker [(ngModel)]="heureRDV" [minValue]="minPM" [maxValue]="maxPM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservationPM"></igx-time-picker>
+            <input type="text" class="form-control" [(ngModel)]="title"/>
+          </td>
+          <td>
+            <igx-time-picker [(ngModel)]="heureRDV" [itemsDelta]="{minutes:30}" format="HH:mm" name="heureRDV"></igx-time-picker>
           </td>
           <td>
             <button class="btn btn-danger" (click)="deleteEvent(event)">
@@ -86,7 +93,7 @@
             </button>
           </td>
           <td>
-            <button class="btn btn-danger" (click)="addReservation(event)">
+            <button class="btn btn-danger" (click)="addReservation(event)" [disabled]="reservationDisabled === true ? true : false">
               Réserver
             </button>
           </td>

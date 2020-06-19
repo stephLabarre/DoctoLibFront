@@ -32,11 +32,6 @@ const colors: any = {
 export class ReservationComponent {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
-  public minAM: string = "08:25";
-  public maxAM: string = "12:00";
-  public minPM: string = "13:00";
-  public maxPM: string = "18:00";
-
   view: CalendarView = CalendarView.Day;
 
   CalendarView = CalendarView;
@@ -74,6 +69,9 @@ export class ReservationComponent {
   ];
   */
 
+  event: CalendarEvent;
+
+
   events: CalendarEvent[] = [
    /*
     {
@@ -92,14 +90,14 @@ export class ReservationComponent {
   ];
 
   activeDayIsOpen: boolean = true;
-
-  constructor(private modal: NgbModal, private horaireService: HoraireService) {
-    this.retreiveHoraires();
-  }
-
+  openHoraires: string;
   public horairesList: Horaires[] = [];
 
-  public jours: string[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+  constructor(private modal: NgbModal, private horaireService: HoraireService) {
+    //this.retreiveHoraires();  
+  }
+
+  public jours: string[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -138,67 +136,36 @@ export class ReservationComponent {
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
-  addEvent(): void {
-    let hour: number = 30;
-    this.events = [
-      ...this.events,
-      {
-        title: 'User 1',
-        start: startOfDay(new Date()),
-        end: endOfDay(hour),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
+  title: string;
   heureRDV: Date;
+  reservationDisabled: boolean = false;
 
   addReservation(eventToAdd: CalendarEvent) {
-    let heure: number;
-    console.log("reservation:");
-    //start: setHours(setMinutes(new Date(Date.parse("July 20 2017 02:00:00")), 0), 1),
-    console.log(this.heureRDV);
-    this.events.filter((event) => {
-      if(event == eventToAdd){
-         
-        heure = event.start.getHours();
-        console.log("heure du RDV start "+ heure);
-        console.log("heure du RDV end "+ event.end.getHours());
+    let startDate = new Date();
+    let endDate = new Date();
+    console.log("HEURE RDV FIXE : " + this.heureRDV);
+    startDate.setHours(this.heureRDV.getHours());
+    startDate.setMinutes(0);
+    endDate.setHours(this.heureRDV.getHours());
+    endDate.setMinutes(this.heureRDV.getMinutes() + 30);
+    console.log("START HOUR " + startDate);
+    console.log("END HOUR " + endDate);
 
-
-    
-       // this.heureRDV = 
-       this.events = [
-        ...this.events,
-        {
-          title: 'User 1',
-          start: startOfDay(new Date()),
-          end: endOfDay(hour),
-          color: colors.red,
-          draggable: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true,
-          },
-        },
-      ];  
-
-
-
-      }
-    
-    });
-
-
+    this.events = [ 
+      ...this.events,
+      {
+        title: this.title,
+        start: startDate,
+        end: endDate,
+        color: colors.red,
+      },
+    ];  
+    this.reservationDisabled = true;
+    this.title = "";
   }
 
   setView(view: CalendarView) {
@@ -209,17 +176,19 @@ export class ReservationComponent {
     this.activeDayIsOpen = false;
   }
 
+  horaires: Horaires[];
+
   retreiveHoraires() {
     console.log("Etape 1");
     let horaires: Horaires[] = [];
     let tmp: Observable<Horaires[]> = this.horaireService.getHoraires();
     
     tmp.subscribe(horaire => {
-      horaires = horaire;   
+      this.horaires = horaire;   
       this.formatHoraire(horaires);
-      console.log("Etape 3");
-      console.log("Data from BDD = " + JSON.stringify(horaires));
-      console.log("Data Target Retreive = " + JSON.stringify(this.horairesList));
+      
+      console.log("VIEW DATE " + this.viewDate);
+
     }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
             console.log('Client-side error occured.');
@@ -227,16 +196,13 @@ export class ReservationComponent {
             console.log('Server-side error occured.');
         }
     });  
-    console.log("Etape 4");
   }
 
   formatHoraire (horaires: Horaires[])  {
-    console.log("Etape 2");
-    for (let entry of this.jours) {
-      console.log("Jour de la semaine : " + entry);
+    console.log("Passage dans formatHoraire");
+   for (let entry of this.jours) {
       let h: Horaires = horaires.find(e => e.jour === entry);
       if (h != null) {
-        console.log("DATA Before: " + JSON.stringify(h));
         let dateDAM: Date;
         let dateFAM: Date;
         let dateDPM: Date;
@@ -244,15 +210,11 @@ export class ReservationComponent {
 
         if (h.debutAMHour != null) {
           dateDAM = new Date(h.debutAMHour);
-          console.log("DEBUT AM BDD = " + h.debutAMHour);
-          console.log("DEBUT AM DATA = " + dateDAM);
         } else {
           dateDAM = null;
         }
         if (h.finAMHour != null) {
           dateFAM = new Date(h.finAMHour);
-          console.log("DEBUT AM BDD = " + h.finAMHour);
-          console.log("DEBUT AM DATA = " + dateFAM);
         } else {
           dateFAM = null;
         }
@@ -267,16 +229,71 @@ export class ReservationComponent {
           dateFPM = null;
         }
         let horaireTmp: Horaires = new Horaires(h.jour, dateDAM, dateFAM, dateDPM, dateFPM); 
-        console.log("DATA After: " + JSON.stringify(horaireTmp));
         this.horairesList.push(horaireTmp);
       } else {
         this.horairesList.push(new Horaires(entry, null, null, null, null));
       }
     }
+    
+    console.log("ETAPE 1");
+    this.horairesList.forEach(h => {
+        console.log("Jour trouve OK" + h.jour);
+        console.log("Date Matin debut:"+h.debutAMHour);
+        console.log("Date Matin fin:"+h.finAMHour);
+        console.log("Date Après-Midi debut:"+h.debutPMHour);
+        console.log("Date Après-Midi fin:"+h.finPMHour);
+    });
+    console.log("ETAPE 2");
+/*
+    console.log("Taille TAB + " + this.horairesList.length);
+    console.log("Taille du tableau des horaires"+ this.horairesList.length);
+    this.horairesList.forEach(h => {
+      console.log("JOUR " + h.jour);
+      let jour: string = this.getDayOfADate(this.viewDate);
+      console.log("Aujourd'hui" + jour);
+      if (jour === h.jour) {
+        console.log("Jour trouve OK");
+        console.log("Date Matin debut:"+h.debutAMHour);
+        console.log("Date Matin fin:"+h.finAMHour);
+        console.log("Date Après-Midi debut:"+h.debutPMHour);
+        console.log("Date Après-Midi fin:"+h.finPMHour);
+        this.openHoraires = h.jour + ": Matin de " + h.debutAMHour.getHours() + "H" + h.debutAMHour.getMinutes() + "mn à " 
+        + h.finAMHour.getHours() + "H" + h.finAMHour.getMinutes() + "mn\n" 
+        + "Après-mide de " + h.debutPMHour.getHours() + "H" + h.debutPMHour.getMinutes() + "mn à " 
+        + h.finPMHour.getHours() + "H" + h.finPMHour.getMinutes() + "mn\n";
+      }
+    });
+    */
   }
-}
 
-interface MyEvent extends CalendarEvent {
-  id: number;
-  userName: string;
+  getDayOfADate(d: Date) {
+    let dayNumber: number = d.getDay();
+    console.log("Numéro du jour: " + dayNumber);
+    switch (dayNumber) {
+      case 0:
+        return "Dimanche";
+        break;
+      case 1:
+        return "Lundi";
+        break;
+      case 2:
+        return "Mardi";
+        break;
+      case 3:
+        return "Mercredi";
+        break;
+      case 4:
+        return "Jeudi";
+        break;
+      case 5: 
+        return "Vendredi";
+        break;
+      case 6:
+        return "Samedi";
+        break;
+      default:
+        return "Unknown";
+        break;
+    }
+  }
 }
