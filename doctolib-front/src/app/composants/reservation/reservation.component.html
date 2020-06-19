@@ -34,26 +34,26 @@
     <div class="col-md-4">
       <div class="btn-group">
         <div
-          class="btn btn-primary"
-          (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week"
+         class="btn btn-primary"
+          (click)="setView(CalendarView.Day)"
+          [class.active]="view === CalendarView.Day"
         >
-          Week
+          Day
         </div>
       </div>
     </div>
   </div>
   <br />
   <div [ngSwitch]="view">
-    <mwl-calendar-week-view
-      *ngSwitchCase="CalendarView.Week"
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
       [viewDate]="viewDate"
       [events]="events"
-      [refresh]="refresh"      
+      [refresh]="refresh"
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
     >
-    </mwl-calendar-week-view>   
+    </mwl-calendar-day-view>  
   </div>
   
   <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
@@ -79,10 +79,10 @@
       <tbody>
         <tr *ngFor="let event of events">
           <td>
-            <igx-time-picker [minValue]="minAM" [maxValue]="maxAM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservation"></igx-time-picker>
+            <igx-time-picker [minValue]="minAM" [maxValue]="maxAM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservationAM"></igx-time-picker>
           </td>
           <td>
-            <igx-time-picker [minValue]="minPM" [maxValue]="maxPM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservation"></igx-time-picker>
+            <igx-time-picker [minValue]="minPM" [maxValue]="maxPM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservationPM"></igx-time-picker>
           </td>
           <td>
             <button class="btn btn-danger" (click)="deleteEvent(event)">
@@ -98,3 +98,27 @@
       </tbody>
     </table>
   </div>
+
+  <ng-template #modalContent let-close="close">
+    <div class="modal-header">
+      <h5 class="modal-title">Event action occurred</h5>
+      <button type="button" class="close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        Action:
+        <pre>{{ modalData?.action }}</pre>
+      </div>
+      <div>
+        Event:
+        <pre>{{ modalData?.event | json }}</pre>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="close()">
+        OK
+      </button>
+    </div>
+  </ng-template>

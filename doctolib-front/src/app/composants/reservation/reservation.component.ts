@@ -1,8 +1,12 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { HoraireService } from '../../services/horaires/horaire.service';
+import { Horaires } from '../../entites/Horaires';
+import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const colors: any = {
   red: {
@@ -33,7 +37,7 @@ export class ReservationComponent {
   public minPM: string = "13:00";
   public maxPM: string = "18:00";
 
-  view: CalendarView = CalendarView.Week;
+  view: CalendarView = CalendarView.Day;
 
   CalendarView = CalendarView;
 
@@ -64,13 +68,38 @@ export class ReservationComponent {
 
   refresh: Subject<any> = new Subject();
 
+  /*
+  events: MyEvent[] = [
+
+  ];
+  */
+
   events: CalendarEvent[] = [
-    
+   /*
+    {
+      start: addHours(startOfDay(new Date()), 2),
+      end: addHours(new Date(), 2),
+      title: 'A draggable and resizable event',
+      color: colors.yellow,
+      actions: this.actions,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    }
+    */
   ];
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal, private horaireService: HoraireService) {
+    this.retreiveHoraires();
+  }
+
+  public horairesList: Horaires[] = [];
+
+  public jours: string[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -110,12 +139,13 @@ export class ReservationComponent {
   }
 
   addEvent(): void {
+    let hour: number = 30;
     this.events = [
       ...this.events,
       {
-        title: 'New event',
+        title: 'User 1',
         start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
+        end: endOfDay(hour),
         color: colors.red,
         draggable: true,
         resizable: {
@@ -132,6 +162,7 @@ export class ReservationComponent {
 
   addReservation(eventToAdd: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToAdd);
+
   }
 
   setView(view: CalendarView) {
@@ -141,6 +172,75 @@ export class ReservationComponent {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-  
 
+  retreiveHoraires() {
+    console.log("Etape 1");
+    let horaires: Horaires[] = [];
+    let tmp: Observable<Horaires[]> = this.horaireService.getHoraires();
+    
+    tmp.subscribe(horaire => {
+      horaires = horaire;   
+      this.formatHoraire(horaires);
+      console.log("Etape 3");
+      console.log("Data from BDD = " + JSON.stringify(horaires));
+      console.log("Data Target Retreive = " + JSON.stringify(this.horairesList));
+    }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+            console.log('Client-side error occured.');
+        } else {
+            console.log('Server-side error occured.');
+        }
+    });  
+    console.log("Etape 4");
+  }
+
+  formatHoraire (horaires: Horaires[])  {
+    console.log("Etape 2");
+    for (let entry of this.jours) {
+      console.log("Jour de la semaine : " + entry);
+      let h: Horaires = horaires.find(e => e.jour === entry);
+      if (h != null) {
+        console.log("DATA Before: " + JSON.stringify(h));
+        let dateDAM: Date;
+        let dateFAM: Date;
+        let dateDPM: Date;
+        let dateFPM: Date;
+
+        if (h.debutAMHour != null) {
+          dateDAM = new Date(h.debutAMHour);
+          console.log("DEBUT AM BDD = " + h.debutAMHour);
+          console.log("DEBUT AM DATA = " + dateDAM);
+        } else {
+          dateDAM = null;
+        }
+        if (h.finAMHour != null) {
+          dateFAM = new Date(h.finAMHour);
+          console.log("DEBUT AM BDD = " + h.finAMHour);
+          console.log("DEBUT AM DATA = " + dateFAM);
+        } else {
+          dateFAM = null;
+        }
+        if (h.debutPMHour != null) {
+          dateDPM = new Date(h.debutPMHour);
+        } else {
+          dateDPM = null;
+        }
+        if (h.finPMHour != null) {
+          dateFPM = new Date(h.finPMHour);
+        } else {
+          dateFPM = null;
+        }
+        let horaireTmp: Horaires = new Horaires(h.jour, dateDAM, dateFAM, dateDPM, dateFPM); 
+        console.log("DATA After: " + JSON.stringify(horaireTmp));
+        this.horairesList.push(horaireTmp);
+      } else {
+        this.horairesList.push(new Horaires(entry, null, null, null, null));
+      }
+    }
+  }
+}
+
+interface MyEvent extends CalendarEvent {
+  id: number;
+  userName: string;
 }
