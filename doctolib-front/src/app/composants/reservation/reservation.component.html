@@ -69,8 +69,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Matin</th>
-          <th>Après-midi</th>
+          <th>Heure</th>
           <th>Supprimer</th>
           <th>Réserver</th>
         </tr>
@@ -79,10 +78,7 @@
       <tbody>
         <tr *ngFor="let event of events">
           <td>
-            <igx-time-picker [minValue]="minAM" [maxValue]="maxAM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservationAM"></igx-time-picker>
-          </td>
-          <td>
-            <igx-time-picker [minValue]="minPM" [maxValue]="maxPM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservationPM"></igx-time-picker>
+            <igx-time-picker [(ngModel)]="heureRDV" [minValue]="minPM" [maxValue]="maxPM" [itemsDelta]="{minutes:30}" format="HH:mm" name="reservationPM"></igx-time-picker>
           </td>
           <td>
             <button class="btn btn-danger" (click)="deleteEvent(event)">

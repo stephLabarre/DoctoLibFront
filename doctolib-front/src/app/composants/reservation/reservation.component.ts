@@ -160,8 +160,44 @@ export class ReservationComponent {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
+  heureRDV: Date;
+
   addReservation(eventToAdd: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToAdd);
+    let heure: number;
+    console.log("reservation:");
+    //start: setHours(setMinutes(new Date(Date.parse("July 20 2017 02:00:00")), 0), 1),
+    console.log(this.heureRDV);
+    this.events.filter((event) => {
+      if(event == eventToAdd){
+         
+        heure = event.start.getHours();
+        console.log("heure du RDV start "+ heure);
+        console.log("heure du RDV end "+ event.end.getHours());
+
+
+    /*
+       // this.heureRDV = 
+       this.events = [
+        ...this.events,
+        {
+          title: 'User 1',
+          start: startOfDay(new Date()),
+          end: endOfDay(hour),
+          color: colors.red,
+          draggable: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
+        },
+      ];  */
+
+
+
+      }
+    
+    });
+
 
   }
 
