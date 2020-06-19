@@ -175,7 +175,7 @@ export class ReservationComponent {
         console.log("heure du RDV end "+ event.end.getHours());
 
 
-    /*
+    
        // this.heureRDV = 
        this.events = [
         ...this.events,
@@ -190,7 +190,7 @@ export class ReservationComponent {
             afterEnd: true,
           },
         },
-      ];  */
+      ];  
 
 
 
