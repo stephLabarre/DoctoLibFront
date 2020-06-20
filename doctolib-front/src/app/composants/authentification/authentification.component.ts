@@ -24,7 +24,9 @@ export class AuthentificationComponent implements OnInit {
     let utilisateur = new Utilisateur(0, "","", this.authentificationForm.login, this.authentificationForm.mdp,"", 0,"","","","", "");
     this.utilisateurService.loggedUser(utilisateur).subscribe(user => {
       this.user = user; 
-      console.log("Utilisateur connecté=" + this.user.nom + " prenom=" + this.user.prenom + " login=" + this.user.login + " role=" + this.user.role);  
+      if (user != null) {
+        console.log("Utilisateur connecté=" + this.user.nom + " prenom=" + this.user.prenom + " login=" + this.user.login + " role=" + this.user.role);  
+      }
     }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
             console.log('Client-side error occured.');

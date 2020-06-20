@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -31,7 +31,7 @@ const colors: any = {
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
 })
-export class ReservationComponent {
+export class ReservationComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Day;
@@ -91,25 +91,17 @@ export class ReservationComponent {
     */
   ];
 
+  ngOnInit() {    
+    console.log("On Init");
+  }
+
   activeDayIsOpen: boolean = true;
   openHoraires: string;
   public horairesList: Horaires[] = [];
 
   constructor(private modal: NgbModal, private horaireService: HoraireService, private rdvService: RdvService) {
+    console.log("Constructeur");
     this.getAllRdv();
-    this.rdvs.forEach(rdv => {
-      let endDate: Date = rdv.start;
-      endDate.setHours(this.heureRDV.getHours());
-      endDate.setMinutes(this.heureRDV.getMinutes() + 30);
-      this.events.push(
-        {
-          title: rdv.title,
-          start: rdv.start,
-          end: endDate,
-          color: colors.red,
-          }
-      );
-    });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -122,7 +114,7 @@ export class ReservationComponent {
       } else {
         this.activeDayIsOpen = true;
       }
-      this.viewDate = date;
+      this.viewDate = date;      
     }
   }
 
@@ -202,9 +194,49 @@ export class ReservationComponent {
   rdvs: Rdv[] = [];
 
   getAllRdv() {
-    let tmp: Observable<Rdv[]> = this.rdvService.getRdvs(this.viewDate);
+    let dateJour: Date = new Date();
+
+    dateJour.setFullYear(this.viewDate.getFullYear());
+    dateJour.setMonth(this.viewDate.getMonth());
+    dateJour.setDate(this.viewDate.getDate());
+    console.log("Before RDV Service");
+    let tmp: Observable<Rdv[]> = this.rdvService.getRdvs(dateJour);
     tmp.subscribe(rdv => {
       this.rdvs = rdv;   
+      console.log("After Get All RDVs TAB SIZE " + this.rdvs.length);
+      this.rdvs.forEach(rdv => {
+
+        let currentDate: Date = new Date(rdv.start);
+        let startDate: Date = new Date();
+        let endDate: Date = new Date();
+
+        startDate.setFullYear(currentDate.getFullYear());
+        startDate.setMonth(currentDate.getMonth());
+        startDate.setDate(currentDate.getDate());
+        startDate.setHours(currentDate.getHours());
+        startDate.setMinutes(currentDate.getMinutes() + 30);
+
+        endDate.setFullYear(currentDate.getFullYear());
+        endDate.setMonth(currentDate.getMonth());
+        endDate.setDate(currentDate.getDate());
+        endDate.setHours(startDate.getHours());
+        endDate.setMinutes(startDate.getMinutes() + 30);
+
+        console.log("Rdv = " + rdv.title + " start:" + startDate + " end:" + startDate);
+  
+        this.events.push(
+          {
+            title: rdv.title,
+            start: startDate,
+            end: endDate,
+            color: colors.red,
+            }
+        );
+      });
+      console.log("Taille des EVENTS Recuperer : " + this.events.length);
+      this.ngOnInit();
+
+      this.refresh.next();
     }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
             console.log('Client-side error occured.');
