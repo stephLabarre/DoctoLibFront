@@ -104,19 +104,19 @@
 
   <ng-template #modalContent let-close="close">
     <div class="modal-header">
-      <h5 class="modal-title">Event action occurred</h5>
+      <h5 class="modal-title">Rendez-vous</h5>
       <button type="button" class="close" (click)="close()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
       <div>
-        Action:
-        <pre>{{ modalData?.action }}</pre>
+        Nom
+        <pre>{{ modalData?.event.title }}</pre>
       </div>
       <div>
-        Event:
-        <pre>{{ modalData?.event | json }}</pre>
+        Rdv :
+        <pre>{{ modalData?.event.start | date :'medium'}}</pre>
       </div>
     </div>
     <div class="modal-footer">
