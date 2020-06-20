@@ -158,16 +158,23 @@ export class ReservationComponent {
   reservationDisabled: boolean = false;
 
   addReservation(eventToAdd: CalendarEvent) {
-//    let startDate = new Date();
-    let startDate = this.viewDate;
-    let endDate = this.viewDate;
-    console.log("HEURE RDV FIXE : " + this.heureRDV);
+    let selectedDate: Date = new Date(this.viewDate);
+    let startDate: Date = new Date();
+    let endDate: Date = new Date();
+
+    startDate.setFullYear(selectedDate.getFullYear());
+    startDate.setMonth(selectedDate.getMonth());
+    startDate.setDate(selectedDate.getDate());
+
+    endDate.setFullYear(selectedDate.getFullYear());
+    endDate.setMonth(selectedDate.getMonth());
+    endDate.setDate(selectedDate.getDate());
+
     startDate.setHours(this.heureRDV.getHours());
-    startDate.setMinutes(0);
+    startDate.setMinutes(this.heureRDV.getMinutes());
     endDate.setHours(this.heureRDV.getHours());
-    endDate.setMinutes(this.heureRDV.getMinutes() + 30);
-    console.log("START HOUR " + startDate);
-    console.log("END HOUR " + endDate);
+    let minutes: number = this.heureRDV.getMinutes() + 30; 
+    endDate.setMinutes(minutes);
 
     this.events = [ 
       ...this.events,
