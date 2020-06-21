@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthentificationComponent } from './authentification.component';
+import { UtilisateurService } from '../../services/utilisateur.service';
 
 describe('AuthentificationComponent', () => {
   let component: AuthentificationComponent;
@@ -8,6 +9,7 @@ describe('AuthentificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [UtilisateurService],
       declarations: [ AuthentificationComponent ]
     })
     .compileComponents();
