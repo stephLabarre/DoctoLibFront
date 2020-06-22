@@ -14,6 +14,12 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
+  it('Test AppComponent success', () => {
+    console.log("Test AppComponent Passant");
+    let t: boolean = false;
+    expect(t).toBeFalse();
+  });
+
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
@@ -26,10 +32,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('doctolib-front');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('doctolib-front app is running!');
-  });
 });

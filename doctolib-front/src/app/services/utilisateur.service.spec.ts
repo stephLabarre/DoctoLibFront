@@ -1,16 +1,26 @@
-import { TestBed } from '@angular/core/testing';
-
 import { UtilisateurService } from './utilisateur.service';
+import {
+  HttpClientTestingModule,
+  HttpTestingController
+  } from '@angular/common/http/testing';
+import { TestBed, inject } from '@angular/core/testing';
 
 describe('UtilisateurService', () => {
-  let service: UtilisateurService;
-
+ 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(UtilisateurService);
-  });
+    TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
+      providers: [UtilisateurService]
+      });
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  it(
+    'should be initialized',
+    inject([UtilisateurService], (utilisateurService: UtilisateurService) => {
+      console.log("TEST");
+      let baseURL = utilisateurService.baseUrl;
+      console.log("BASE URL + " + baseURL);
+      expect(baseURL).toEqual("http://localhost:8080/");     
+    })
+  );
 });
