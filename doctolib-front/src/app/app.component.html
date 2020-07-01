@@ -4,17 +4,20 @@
       <li class="nav-item">
           <a routerLink="/authentification" class="nav-link" routerLinkActive="active">S'authentifier</a>&nbsp;&nbsp;&nbsp;
       </li>   
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!show || admin">
         <a routerLink="/creationcompte" class="nav-link" routerLinkActive="active">Créer son compte</a>&nbsp;&nbsp;&nbsp;
       </li>   
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="show && admin">
         <a routerLink="/gestionutilisateurs" class="nav-link" routerLinkActive="active">Gérer les utilisateurs</a>&nbsp;&nbsp;&nbsp;
       </li>   
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="show && admin">
         <a routerLink="/gestionhoraires" class="nav-link" routerLinkActive="active">Gérer horaires d'ouverture</a>&nbsp;&nbsp;&nbsp;
       </li>     
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="show">
         <a routerLink="/reservation" class="nav-link" routerLinkActive="active">Prendre RDV</a>&nbsp;&nbsp;&nbsp;
+      </li>     
+      <li class="nav-item">
+        <a routerLink="/logout" class="nav-link" routerLinkActive="active">Se déconnecter</a>&nbsp;&nbsp;&nbsp;
       </li>     
     </ul>
 </nav>

@@ -20,6 +20,7 @@ import { ReservationComponent } from './composants/reservation/reservation.compo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { LogoutComponent } from './composants/authentification/logout/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FlatpickrModule } from 'angularx-flatpickr';
     CreationcompteComponent,
     GestionhorairesComponent,
     GererutilisateursComponent,
-    ReservationComponent
+    ReservationComponent,
+    LogoutComponent
   ],
   exports: [ReservationComponent],
   imports: [

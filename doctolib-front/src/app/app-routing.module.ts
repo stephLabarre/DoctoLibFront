@@ -5,13 +5,16 @@ import { CreationcompteComponent } from './composants/creationcompte/creationcom
 import { GestionhorairesComponent } from './composants/administrateur/gestionhoraires/gestionhoraires.component';
 import { GererutilisateursComponent } from './composants/administrateur/gererutilisateurs/gererutilisateurs.component';
 import { ReservationComponent } from './composants/reservation/reservation.component';
+import { AuthGuardGuard } from './services/guards/auth-guard.guard';
+import { LogoutComponent } from './composants/authentification/logout/logout/logout.component';
 
 const routes: Routes = [
   {path: 'authentification', component: AuthentificationComponent},
   {path: 'creationcompte', component: CreationcompteComponent},
-  {path: 'gestionhoraires', component: GestionhorairesComponent},
-  {path: 'gestionutilisateurs', component: GererutilisateursComponent},
-  {path: 'reservation', component: ReservationComponent}
+  {path: 'gestionhoraires', component: GestionhorairesComponent, canActivate: [AuthGuardGuard]},
+  {path: 'gestionutilisateurs', component: GererutilisateursComponent, canActivate: [AuthGuardGuard]},
+  {path: 'reservation', component: ReservationComponent},
+  {path: 'logout', component: LogoutComponent}
 ];
 
 @NgModule({

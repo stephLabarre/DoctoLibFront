@@ -9,7 +9,12 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'doctolib-front';
 
+  show: boolean;
+  admin: boolean;
+
   constructor(private routeur: Router) {
+    this.show = false;
+    this.admin = false;
     this.routeur.navigateByUrl('/authentification');    
-  }
+  }  
 }
