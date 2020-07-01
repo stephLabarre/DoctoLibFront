@@ -1,3 +1,4 @@
+
 <h3 style="text-align:center">Création du compte</h3>
 
 <div class="container text-center">
@@ -10,11 +11,32 @@
                     Login : <input required minLength="2" maxLength="50" type="text" class="form-control" name="login" [(ngModel)]="creationCompteForm.login"> 
                     Mot de passe : <input required minLength="2" maxLength="50" type="text" class="form-control" name="mdp" [(ngModel)]="creationCompteForm.mdp"> 
                     Adresse : <input required minLength="2" maxLength="50" type="text" class="form-control" name="adresse" [(ngModel)]="creationCompteForm.adresse"> 
-                    Code postal : <input required type="number" class="form-control" name="codePostal" [(ngModel)]="creationCompteForm.codePostal"> 
+                    Code postal : <input pattern="\b\d{5}\b" 
+                        required type="number" class="form-control" name="codePostal" 
+                        title="Le code postal doit contenir 5 chiffres uniquement" 
+                        #codePostal="ngModel"
+                        [class.is-invalid]="codePostal.invalid"
+                        [(ngModel)]="creationCompteForm.codePostal"> 
+                    <!--<div *ngIf="myForm.invalid" style="margin: 0px auto;width: 500px;" class="alert alert-danger">Le code postal ne doit contenir que 5 chiffres</div>-->
                     Ville : <input required minLength="2" maxLength="50" type="text" class="form-control" name="ville" [(ngModel)]="creationCompteForm.ville"> 
-                    Email : <input required minLength="2" maxLength="50" type="text" class="form-control" name="email" [(ngModel)]="creationCompteForm.email"> 
-                    Téléphone : <input required minLength="2" maxLength="50" type="text" class="form-control" name="tel" [(ngModel)]="creationCompteForm.tel"> 
-                    Numéro de sécurité sociale : <input required minLength="2" maxLength="50" type="text" class="form-control" name="numSecSociale" [(ngModel)]="creationCompteForm.numSecSociale"> 
+                    Email : <input required minLength="2" maxLength="50" 
+                        email type="text" class="form-control" name="email" 
+                        title="Entrer une adresse mail valide" 
+                        #email="ngModel"
+                        [class.is-invalid]="email.invalid"
+                        [(ngModel)]="creationCompteForm.email"> 
+                    Téléphone : <input pattern="\b\d{10}\b" required minLength="2" 
+                        maxLength="50" type="text" class="form-control" name="tel" 
+                        title="Entrer un numéro de téléphone valide"  
+                        #tel="ngModel"
+                        [class.is-invalid]="tel.invalid"
+                        [(ngModel)]="creationCompteForm.tel"> 
+                    Numéro de sécurité sociale : <input pattern="\b\d{13}\b" required 
+                        minLength="2" maxLength="50" type="number" class="form-control" 
+                        name="numSecSociale" title="Entrer un numéro de sécurité socials valide" 
+                        #numSecSociale="ngModel"
+                        [class.is-invalid]="numSecSociale.invalid"
+                        [(ngModel)]="creationCompteForm.numSecSociale"> 
                     <button (click)="creerCompte()" [disabled]="myForm.invalid" type="submit" class="btn btn-primary mt-2">Créer compte</button>
                 </div>
             </form>

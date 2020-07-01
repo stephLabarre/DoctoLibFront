@@ -25,7 +25,12 @@
                 </tr>
                 <tr>
                     <td>Code Postal : </td>
-                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-codePostal" [(ngModel)]="user.codePostal">                
+                    <input minLength="2" maxLength="50" pattern="\b\d{5}\b" type="text" 
+                        class="form-control update" name="user-codePostal" 
+                        #codePostal="ngModel"
+                        [class.is-invalid]="codePostal.invalid"
+                        title="Le code postal doit contenir 5 chiffres uniquement"
+                        [(ngModel)]="user.codePostal">                
                 </tr>
                 <tr>
                     <td>Ville : </td>
@@ -33,19 +38,34 @@
                 </tr>
                 <tr>
                     <td>Email : </td>
-                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-email" [(ngModel)]="user.email">                
+                    <input minLength="2" maxLength="50" email type="text" 
+                        class="form-control update" name="user-email" 
+                        title="Entrer une adresse mail valide" 
+                        #email="ngModel"
+                        [class.is-invalid]="email.invalid"
+                        [(ngModel)]="user.email">                
                 </tr>
                 <tr>
                     <td>Téléphone : </td>
-                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-tel" [(ngModel)]="user.tel">            
+                    <input minLength="2" pattern="\b\d{10}\b" maxLength="50" 
+                        type="text" class="form-control update" name="user-tel" 
+                        #tel="ngModel"
+                        [class.is-invalid]="tel.invalid"
+                        title="Entrer un numéro de téléphone valide"
+                        [(ngModel)]="user.tel">            
                 </tr>
                 <tr>
                     <td>Numéro Sécurité sociale : </td>
-                    <input minLength="2" maxLength="50" type="text" class="form-control update" name="user-numSecSociale" [(ngModel)]="user.numSecSociale">            
+                    <input minLength="2" maxLength="50" pattern="\b\d{13}\b" 
+                        type="text" class="form-control update" name="user-numSecSociale" 
+                        #numSecSociale="ngModel"
+                        [class.is-invalid]="numSecSociale.invalid"
+                        title="Entrer un numéro de sécurité socials valide" 
+                        [(ngModel)]="user.numSecSociale">            
                 </tr>
             </table>
             <br/>
-            <button style="margin:0 auto; display:block;" (click)="save(user)" type="submit" class="btn btn-primary mt-2">Sauvegarder</button>
+            <button style="margin:0 auto; display:block;" [disabled]="myForm.invalid" (click)="save(user)" type="submit" class="btn btn-primary mt-2">Sauvegarder</button>
         </form>
     </div>
 </div>
